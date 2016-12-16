@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1481897955 source:c:\dev\c++\tanks in sfml\main.cpp
+	<SFML/Graphics.hpp>
+	"Map.h"
+	"Tank.h"
+
+1481893700 source:c:\dev\c++\tanks in sfml\src\map.cpp
+	"Map.h"
+
+1481898021 c:\dev\c++\tanks in sfml\include\map.h
+	<fstream>
+
+1481893490 source:c:\dev\c++\tanks in sfml\src\tank.cpp
+	"Tank.h"
+
+1481893359 c:\dev\c++\tanks in sfml\include\tank.h
+	<SFML/Graphics.hpp>
+	"Map.h"
+

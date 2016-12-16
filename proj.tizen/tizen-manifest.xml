@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<manifest xmlns="http://tizen.org/ns/packages" api-version="2.3" package="org.cocos2dx.com.Pandaismyname1.Tanks" version="1.0.0">
-    <ui-application appid="org.cocos2dx.com.Pandaismyname1.Tanks" exec="hellocpp" multiple="false" nodisplay="false" taskmanage="true" type="capp">
-        <label>com.Pandaismyname1.Tanks</label>
-        <icon>com.Pandaismyname1.Tanks.png</icon>
-    </ui-application>
-</manifest>

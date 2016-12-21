@@ -1,4 +1,5 @@
 #include <fstream>
+#include <iostream>
 namespace Game
 {
     #ifndef MAP_H

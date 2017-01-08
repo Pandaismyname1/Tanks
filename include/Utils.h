@@ -11,6 +11,9 @@ namespace Game
             sf::Event *GameEvent;
             bool KeyPressed[];
             bool IsWalkableTile(Game::Map *map,int X,int Y);
+            bool IsFlyableTile(Game::Map *map,int X, int Y);
+            bool CanExplode(Game::Map *map,int X,int Y);
+            bool ShouldExplode(Game::Map *map,int X, int Y);
             void InitInput();
             char DetectInput();
     };

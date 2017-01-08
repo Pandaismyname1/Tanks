@@ -3,14 +3,41 @@ namespace Game
 {
     bool Utils::IsWalkableTile(Game::Map *map,int X, int Y)
     {
-        std::cout<<"Checking "<<X<<","<<Y<<std::endl;
         if(map->Matrix[X][Y]=='0')
             return true;
         if(map->Matrix[X][Y]=='^')
-        return true;
+            return true;
         if(map->Matrix[X][Y]=='3')
             return true;
         if(map->Matrix[X][Y]=='$')
+            return true;
+        return false;
+    }
+    bool Utils::IsFlyableTile(Game::Map *map,int X, int Y)
+    {
+        if(map->Matrix[X][Y]=='0')
+            return true;
+        if(map->Matrix[X][Y]=='^')
+            return true;
+        if(map->Matrix[X][Y]=='2')
+            return true;
+        if(map->Matrix[X][Y]=='3')
+            return true;
+        if(map->Matrix[X][Y]=='$')
+            return true;
+        return false;
+    }
+    bool Utils::CanExplode(Game::Map *map,int X, int Y)
+    {
+        if(map->Matrix[X][Y]=='1')
+            return true;
+        return false;
+    }
+    bool Utils::ShouldExplode(Game::Map *map,int X, int Y)
+    {
+        if(map->Matrix[X][Y]=='1')
+            return true;
+        if(map->Matrix[X][Y]=='#')
             return true;
         return false;
     }

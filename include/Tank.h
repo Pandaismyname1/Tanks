@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
+#include <list>
 #include "Map.h"
 #include "Utils.h"
+#include "Bullet.h"
 #include <iostream>
 namespace Game
 {
@@ -8,22 +10,25 @@ namespace Game
 #define TANK_H
     class Tank {
         public:
+            std::list<Game::Bullet> *BulletList;
             Game::Map *WorldMap;
             Game::Utils *Utils;
-            sf::Sprite *Sprite;
-            int Life;
-            int Damage;
+            int ID;
+            int Life = 5;
+            int Damage = 1;
             int X,Y;
-            int Rotation;
-            int TankControlType;
+            int Rotation = 0;
+            int TankControlType = 0;
             float OneShotKillTimer;
 
 
             Tank();
             virtual ~Tank();
-            bool init(int, int, int);
-            void setPosition(int, int);
-            bool Move();
+            void Init(int NewX, int NewY, int Type, std::list<Game::Bullet> *Bullets,Game::Map *Map,Game::Utils *GameUtils);
+            void SetPosition(int, int);
+            void Fire();
+            void CheckForBullets();
+            void Move();
             void RotateTo(int);
         };
     #endif // TANK_H

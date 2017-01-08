@@ -1,20 +1,28 @@
 #include <SFML/Graphics.hpp>
 #include "Map.h"
 #include "Tank.h"
+#include "Bullet.h"
 #include "Utils.h"
+#include <list>
 
 Game::Map GameMap;
+std::list<Game::Tank> TanksList;
+std::list<Game::Bullet> BulletList;
 Game::Tank Player;
 Game::Utils GameUtils;
+sf::Clock GameClock;
 sf::Sprite WorldSprite;
 sf::Sprite PlayerSprite;
+sf::Sprite BulletsSprite;
 sf::Texture WorldBuilder;
 sf::Texture WorldBases;
 sf::Texture Tanks;
+sf::Texture Bullet;
 sf::RenderWindow *Window;
 int WorldSpritePixels = 10;
+float Tick=0;
 
-void BuildMap()
+void DrawMap()
 {
     PlayerSprite.setOrigin(10,10);
     for(int i=0;i<GameMap.Height;i++)
@@ -74,10 +82,8 @@ void SpawnPlayer()
         {
             if(GameMap.Matrix[j][i]=='^'&&GameMap.Matrix[j+1][i]=='^'&&GameMap.Matrix[j][i+1]=='^'&&GameMap.Matrix[j+1][i+1]=='^')
             {
-                Player.init(j,i,0);
-                Player.Sprite = &PlayerSprite;
-                Player.WorldMap = &GameMap;
-                Player.Utils = &GameUtils;
+                Player.Init(j,i,0,&BulletList,&GameMap,&GameUtils);
+                TanksList.push_front(Player);
             }
         }
     }
@@ -96,6 +102,7 @@ void LoadTextures()
     WorldBuilder.loadFromFile("Resources/Sprites/WorldBuilder.png");
     WorldBases.loadFromFile("Resources/Sprites/WorldBases.png");
     Tanks.loadFromFile("Resources/Sprites/Tanks.png");
+    Bullet.loadFromFile("Resources/Sprites/Bullet.png");
 }
 void DetectInput()
 {
@@ -121,10 +128,21 @@ void DetectInput()
     }
     else if (GameUtils.DetectInput()==' ')
     {
-
+        Player.Fire();
     }
 }
-
+void DrawBullets()
+{
+    std::list<Game::Bullet>::iterator i;
+    for(i=BulletList.begin(); i != BulletList.end(); ++i)
+    {
+        BulletsSprite.setPosition(sf::Vector2f(((*i).Y+1)*10, ((*i).X+1)*10));
+        BulletsSprite.setOrigin(10,10);
+        BulletsSprite.setRotation((*i).Rotation);
+        BulletsSprite.setTexture(Bullet);
+        Window->draw(BulletsSprite);
+    }
+}
 
 int main()
 {
@@ -147,8 +165,25 @@ int main()
                 Window->close();
         }
         Window->clear();
-        BuildMap();
+        sf::Time elapsed = GameClock.restart();
+        Tick+=elapsed.asSeconds();
+        if(Tick>0.1)
+        {
+            Tick=0;
+            std::list<Game::Bullet>::iterator i;
+            for(i=BulletList.begin(); i != BulletList.end(); ++i)
+            {
+                (*i).Move();
+                if((*i).TryToExplode()==true)
+                {
+                    BulletList.remove(*i);
+                }
+            }
+            //Tick
+        }
+        DrawMap();
         DrawPlayer();
+        DrawBullets();
         //window.draw(shape);
         Window->display();
     }

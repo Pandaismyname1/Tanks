@@ -40,6 +40,7 @@
 		<Unit filename="include/AI_Player_Hard.h" />
 		<Unit filename="include/AI_Player_Medium.h" />
 		<Unit filename="include/Bullet.h" />
+		<Unit filename="include/MainMenu.h" />
 		<Unit filename="include/Map.h" />
 		<Unit filename="include/Tank.h" />
 		<Unit filename="include/Utils.h" />
@@ -49,6 +50,7 @@
 		<Unit filename="src/AI_Player_Hard.cpp" />
 		<Unit filename="src/AI_Player_Medium.cpp" />
 		<Unit filename="src/Bullet.cpp" />
+		<Unit filename="src/MainMenu.cpp" />
 		<Unit filename="src/Map.cpp" />
 		<Unit filename="src/Tank.cpp" />
 		<Unit filename="src/Utils.cpp" />

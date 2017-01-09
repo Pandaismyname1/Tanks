@@ -1,7 +1,8 @@
 # depslib dependency file v1.0
-1483980274 source:c:\dev\c++\tanks in sfml\main.cpp
+1483991681 source:c:\dev\c++\tanks in sfml\main.cpp
 	<SFML/Graphics.hpp>
 	<list>
+	"MainMenu.h"
 	"Map.h"
 	"Tank.h"
 	"Bullet.h"
@@ -33,7 +34,7 @@
 	<list>
 	"Map.h"
 
-1483970098 source:c:\dev\c++\tanks in sfml\src\utils.cpp
+1483984922 source:c:\dev\c++\tanks in sfml\src\utils.cpp
 	"Utils.h"
 
 1483888157 source:c:\dev\c++\tanks in sfml\src\bullet.cpp
@@ -52,7 +53,7 @@
 	"Tank.h"
 	"AI_Base.h"
 
-1483978801 source:c:\dev\c++\tanks in sfml\src\ai_player_medium.cpp
+1483981382 source:c:\dev\c++\tanks in sfml\src\ai_player_medium.cpp
 	"AI_Player_Medium.h"
 
 1483981106 c:\dev\c++\tanks in sfml\include\ai_player_medium.h
@@ -72,4 +73,12 @@
 
 1483980789 source:c:\dev\c++\tanks in sfml\src\ai_player_hard.cpp
 	"AI_Player_Hard.h"
+
+1483995634 c:\dev\c++\tanks in sfml\include\mainmenu.h
+	<SFML/Graphics.hpp>
+	<cmath>
+	<iostream>
+
+1483995183 source:c:\dev\c++\tanks in sfml\src\mainmenu.cpp
+	"MainMenu.h"
 

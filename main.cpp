@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <list>
+#include "MainMenu.h"
 #include "Map.h"
 #include "Tank.h"
 #include "Bullet.h"
@@ -10,6 +11,7 @@
 #include "Utils.h"
 
 Game::Map GameMap;
+Game::MainMenu Menu;
 std::list<Game::Tank*> TanksList;
 std::list<Game::Bullet> BulletList;
 std::list<Game::AI_Base*> AIList;
@@ -218,67 +220,69 @@ void DrawBullets()
 
 int main()
 {
-    GameMap.Load("Map1");
-    GameUtils.InitInput();
-    sf::RenderWindow window(sf::VideoMode(GameMap.Height*WorldSpritePixels , GameMap.Width*WorldSpritePixels), "Tanks! Boom Boom!");
-    Window = &window;
-    window.setKeyRepeatEnabled(false);
-    LoadTextures();
-    SpawnPlayer();
-    srand(time(0));
-    SpawnAI(rand()%3+1);
-
-    while (Window->isOpen())
+    Menu.Start();
+    if(Menu.Dificulty!=0)
     {
-        sf::Event event;
-        GameUtils.GameEvent = &event;
-        while (Window->pollEvent(event))
-        {
-            DetectInput();
-            if (event.type == sf::Event::Closed)
-                Window->close();
-        }
-        Window->clear();
-        sf::Time elapsed = GameClock.restart();
-        Tick+=elapsed.asSeconds();
-        if(Tick>0.1)
-        {
-            srand(time(0));
-            AISpawnTick++;
-            if(AISpawnTick>=29&&AITanksSpawned<4)
-            {
-                AISpawnTick-=29;
-                srand(time(0));
-                SpawnAI(rand()%3+1);
-            }
-            Tick=0;
-            std::list<Game::Bullet>::iterator i;
-            for(i=BulletList.begin(); i != BulletList.end(); ++i)
-            {
-                (*i).Move();
-                if((*i).TryToExplode()==true)
-                {
-                    BulletList.remove(*i);
-                }
-            }
-            std::list<Game::AI_Base*>::iterator j;
-            for(j=AIList.begin(); j != AIList.end(); ++j)
-            {
-                (*j)->Tick();
-            }
-            std::list<Game::Tank*>::iterator k;
-            for(k=TanksList.begin(); k != TanksList.end(); ++k)
-            {
-                (*k)->CheckForBullets();
-            }
-            //Tick
-        }
-        DrawMap();
-        DrawTanks();
-        DrawBullets();
-        //window.draw(shape);
-        Window->display();
-    }
+        GameMap.Load("Map1");
+        GameUtils.InitInput();
+        sf::RenderWindow window(sf::VideoMode(GameMap.Height*WorldSpritePixels , GameMap.Width*WorldSpritePixels), "Tanks! Boom Boom!");
+        Window = &window;
+        window.setKeyRepeatEnabled(false);
+        LoadTextures();
+        SpawnPlayer();
+        srand(time(0));
+        SpawnAI(Menu.Dificulty);
 
+        while (Window->isOpen())
+        {
+            sf::Event event;
+            GameUtils.GameEvent = &event;
+            while (Window->pollEvent(event))
+            {
+                DetectInput();
+                if (event.type == sf::Event::Closed)
+                Window->close();
+            }
+            Window->clear();
+            sf::Time elapsed = GameClock.restart();
+            Tick+=elapsed.asSeconds();
+            if(Tick>0.1)
+            {
+                srand(time(0));
+                AISpawnTick++;
+                if(AISpawnTick>=29&&AITanksSpawned<4)
+                {
+                    AISpawnTick-=29;
+                    SpawnAI(Menu.Dificulty);
+                }
+                Tick=0;
+                std::list<Game::Bullet>::iterator i;
+                for(i=BulletList.begin(); i != BulletList.end(); ++i)
+                {
+                    (*i).Move();
+                    if((*i).TryToExplode()==true)
+                    {
+                        BulletList.remove(*i);
+                    }
+                }
+                std::list<Game::AI_Base*>::iterator j;
+                for(j=AIList.begin(); j != AIList.end(); ++j)
+                {
+                    (*j)->Tick();
+                }
+                std::list<Game::Tank*>::iterator k;
+                for(k=TanksList.begin(); k != TanksList.end(); ++k)
+                {
+                    (*k)->CheckForBullets();
+                }
+                //Tick
+            }
+            DrawMap();
+            DrawTanks();
+            DrawBullets();
+            //window.draw(shape);
+            Window->display();
+        }
+    }
     return 0;
 }

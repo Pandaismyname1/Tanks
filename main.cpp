@@ -1,13 +1,15 @@
 #include <SFML/Graphics.hpp>
+#include <list>
 #include "Map.h"
 #include "Tank.h"
 #include "Bullet.h"
+#include "AI_Player_Easy.h"
 #include "Utils.h"
-#include <list>
 
 Game::Map GameMap;
-std::list<Game::Tank> TanksList;
+std::list<Game::Tank*> TanksList;
 std::list<Game::Bullet> BulletList;
+std::list<Game::AI_Player_Easy> AIList;
 Game::Tank Player;
 Game::Utils GameUtils;
 sf::Clock GameClock;
@@ -21,7 +23,34 @@ sf::Texture Bullet;
 sf::RenderWindow *Window;
 int WorldSpritePixels = 10;
 float Tick=0;
+int AITanksSpawned = 0;
+int AISpawnTick;
 
+void SpawnAI()
+{
+    for(int i=0;i<GameMap.Height;i++)
+    {
+        for(int j=0;j<GameMap.Width;j++)
+        {
+            if(GameMap.Matrix[j][i]=='$'&&GameMap.Matrix[j+1][i]=='$'&&GameMap.Matrix[j][i+1]=='$'&&GameMap.Matrix[j+1][i+1]=='$')
+            {
+                if(!Player.TankCollision(&TanksList,j,i)&&!Player.TankCollision(&TanksList,j+1,i)&&!Player.TankCollision(&TanksList,j,i+1)&&!Player.TankCollision(&TanksList,j+1,i+1))
+                {
+                    Game::AI_Player_Easy AI;
+                    AI.SpawnX = j;
+                    AI.SpawnY = i;
+                    AI.AITank = new Game::Tank();
+                    std::cout<<j<<" "<<i;
+                    AI.AITank->Init(j,i,0,&BulletList,&TanksList,&GameMap,&GameUtils);
+                    AI.AITank->TankControlType = 1;
+                    TanksList.push_front(AI.AITank);
+                    AIList.push_front(AI);
+                    AITanksSpawned++;
+                }
+            }
+        }
+    }
+}
 void DrawMap()
 {
     PlayerSprite.setOrigin(10,10);
@@ -82,20 +111,24 @@ void SpawnPlayer()
         {
             if(GameMap.Matrix[j][i]=='^'&&GameMap.Matrix[j+1][i]=='^'&&GameMap.Matrix[j][i+1]=='^'&&GameMap.Matrix[j+1][i+1]=='^')
             {
-                Player.Init(j,i,0,&BulletList,&GameMap,&GameUtils);
-                TanksList.push_front(Player);
+                Player.Init(j,i,0,&BulletList,&TanksList,&GameMap,&GameUtils);
+                TanksList.push_front(&Player);
             }
         }
     }
 }
-void DrawPlayer()
+void DrawTanks()
 {
-    PlayerSprite.setOrigin(10,10);
-    PlayerSprite.setTexture(Tanks);
-    PlayerSprite.setPosition(sf::Vector2f(Player.Y*10+10, Player.X*10+10));
-    PlayerSprite.setRotation(Player.Rotation);
-    PlayerSprite.setTextureRect(sf::IntRect(1*WorldSpritePixels*2,Player.TankControlType*20,WorldSpritePixels*2,WorldSpritePixels*2));
-    Window->draw(PlayerSprite);
+    std::list<Game::Tank*>::iterator i;
+    for(i=TanksList.begin(); i != TanksList.end(); ++i)
+    {
+        PlayerSprite.setPosition(sf::Vector2f(((*i)->Y+1)*10, ((*i)->X+1)*10));
+        PlayerSprite.setOrigin(10,10);
+        PlayerSprite.setRotation((*i)->Rotation);
+        PlayerSprite.setTexture(Tanks);
+        PlayerSprite.setTextureRect(sf::IntRect(1*WorldSpritePixels*2,(*i)->TankControlType*20,WorldSpritePixels*2,WorldSpritePixels*2));
+        Window->draw(PlayerSprite);
+    }
 }
 void LoadTextures()
 {
@@ -153,6 +186,7 @@ int main()
     window.setKeyRepeatEnabled(false);
     LoadTextures();
     SpawnPlayer();
+    SpawnAI();
 
     while (Window->isOpen())
     {
@@ -169,6 +203,12 @@ int main()
         Tick+=elapsed.asSeconds();
         if(Tick>0.1)
         {
+            AISpawnTick++;
+            if(AISpawnTick>=29&&AITanksSpawned<4)
+            {
+                AISpawnTick-=29;
+                SpawnAI();
+            }
             Tick=0;
             std::list<Game::Bullet>::iterator i;
             for(i=BulletList.begin(); i != BulletList.end(); ++i)
@@ -179,10 +219,20 @@ int main()
                     BulletList.remove(*i);
                 }
             }
+            std::list<Game::AI_Player_Easy>::iterator j;
+            for(j=AIList.begin(); j != AIList.end(); ++j)
+            {
+                (*j).Tick();
+                (*j).AITank->CheckForBullets();
+                if((*j).AITank->Life<=0)
+                {
+                    //AIList.remove(*j);
+                }
+            }
             //Tick
         }
         DrawMap();
-        DrawPlayer();
+        DrawTanks();
         DrawBullets();
         //window.draw(shape);
         Window->display();

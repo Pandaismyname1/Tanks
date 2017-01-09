@@ -1,8 +1,7 @@
-#include <SFML/Graphics.hpp>
-#include <list>
-#include "Map.h"
+#include "Engine"
 namespace Game
 {
+
     #ifndef UTILS_H
     #define UTILS_H
     class Utils
@@ -14,6 +13,7 @@ namespace Game
             bool IsFlyableTile(Game::Map *map,int X, int Y);
             bool CanExplode(Game::Map *map,int X,int Y);
             bool ShouldExplode(Game::Map *map,int X, int Y);
+            bool TankCollision(std::list<Game::Tank> *TankList, int X, int Y);
             void InitInput();
             char DetectInput();
     };

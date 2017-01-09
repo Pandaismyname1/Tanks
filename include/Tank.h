@@ -1,9 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <list>
 #include "Map.h"
-#include "Utils.h"
 #include "Bullet.h"
-#include <iostream>
+#include "Utils.h"
 namespace Game
 {
 #ifndef TANK_H
@@ -11,6 +10,7 @@ namespace Game
     class Tank {
         public:
             std::list<Game::Bullet> *BulletList;
+            std::list<Game::Tank*> *TanksList;
             Game::Map *WorldMap;
             Game::Utils *Utils;
             int ID;
@@ -24,10 +24,11 @@ namespace Game
 
             Tank();
             virtual ~Tank();
-            void Init(int NewX, int NewY, int Type, std::list<Game::Bullet> *Bullets,Game::Map *Map,Game::Utils *GameUtils);
+            void Init(int NewX, int NewY, int Type, std::list<Game::Bullet> *Bullets, std::list<Game::Tank*> *Tanks,Game::Map *Map,Game::Utils *GameUtils);
             void SetPosition(int, int);
             void Fire();
             void CheckForBullets();
+            bool TankCollision(std::list<Game::Tank*> *TankList, int X, int Y);
             void Move();
             void RotateTo(int);
         };

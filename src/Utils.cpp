@@ -11,6 +11,8 @@ namespace Game
             return true;
         if(map->Matrix[X][Y]=='$')
             return true;
+        if(map->Matrix[X][Y]=='*')
+            return true;
         return false;
     }
     bool Utils::IsFlyableTile(Game::Map *map,int X, int Y)
@@ -38,6 +40,8 @@ namespace Game
         if(map->Matrix[X][Y]=='1')
             return true;
         if(map->Matrix[X][Y]=='#')
+            return true;
+        if(map->Matrix[X][Y]=='*')
             return true;
         return false;
     }

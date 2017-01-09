@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <list>
-#include "Map.h"
-#include "Utils.h"
+#include <iostream>
+#include "Engine"
 namespace Game
 {
     #ifndef BULLET_H

@@ -35,11 +35,13 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="Map1" />
+		<Unit filename="include/AI_Player_Easy.h" />
 		<Unit filename="include/Bullet.h" />
 		<Unit filename="include/Map.h" />
 		<Unit filename="include/Tank.h" />
 		<Unit filename="include/Utils.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/AI_Player_Easy.cpp" />
 		<Unit filename="src/Bullet.cpp" />
 		<Unit filename="src/Map.cpp" />
 		<Unit filename="src/Tank.cpp" />

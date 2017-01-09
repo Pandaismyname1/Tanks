@@ -1,29 +1,31 @@
-#include "AI_Player_Easy.h"
+#include "AI_Player_Hard.h"
 namespace Game
 {
 
-    AI_Player_Easy::AI_Player_Easy()
-    {
+AI_Player_Hard::AI_Player_Hard()
+{
+    //ctor
+}
 
-    }
-    AI_Player_Easy::~AI_Player_Easy()
-    {
+AI_Player_Hard::~AI_Player_Hard()
+{
+    //dtor
+}
 
-    }
-    void AI_Player_Easy::Tick()
+    void AI_Player_Hard::Tick()
     {
         tick+=1;
         if(alive)
         {
-            if(tick%4==0)
+            if(tick%2==0)
             {
                 AITank->Move();
             }
-            if(tick%8==0)
+            if(tick%4==0)
             {
                 AITank->Fire();
             }
-            if(tick%13==0)
+            if(tick%7==0)
             {
                 int randNum = rand()%(4);
                 AITank->RotateTo(randNum*90);
@@ -42,14 +44,14 @@ namespace Game
         }
         else
         {
-            if(tick>=150&&!AITank->TankCollision(AITank->TanksList,SpawnX,SpawnY))
+            if(tick>=50&&!AITank->TankCollision(AITank->TanksList,SpawnX,SpawnY))
             {
                 tick=0;
                 Respawn();
             }
         }
     }
-    void AI_Player_Easy::Respawn()
+    void AI_Player_Hard::Respawn()
     {
         alive = true;
         AITank->X = SpawnX;

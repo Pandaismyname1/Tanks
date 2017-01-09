@@ -1,25 +1,27 @@
-#include "AI_Player_Easy.h"
+#include "AI_Player_Medium.h"
 namespace Game
 {
 
-    AI_Player_Easy::AI_Player_Easy()
-    {
+AI_Player_Medium::AI_Player_Medium()
+{
+    //ctor
+}
 
-    }
-    AI_Player_Easy::~AI_Player_Easy()
-    {
+AI_Player_Medium::~AI_Player_Medium()
+{
+    //dtor
+}
 
-    }
-    void AI_Player_Easy::Tick()
+    void AI_Player_Medium::Tick()
     {
         tick+=1;
         if(alive)
         {
-            if(tick%4==0)
+            if(tick%3==0)
             {
                 AITank->Move();
             }
-            if(tick%8==0)
+            if(tick%6==0)
             {
                 AITank->Fire();
             }
@@ -42,14 +44,14 @@ namespace Game
         }
         else
         {
-            if(tick>=150&&!AITank->TankCollision(AITank->TanksList,SpawnX,SpawnY))
+            if(tick>=100&&!AITank->TankCollision(AITank->TanksList,SpawnX,SpawnY))
             {
                 tick=0;
                 Respawn();
             }
         }
     }
-    void AI_Player_Easy::Respawn()
+    void AI_Player_Medium::Respawn()
     {
         alive = true;
         AITank->X = SpawnX;

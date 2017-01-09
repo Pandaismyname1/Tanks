@@ -3,13 +3,16 @@
 #include "Map.h"
 #include "Tank.h"
 #include "Bullet.h"
+#include "AI_Base.h"
 #include "AI_Player_Easy.h"
+#include "AI_Player_Medium.h"
+#include "AI_Player_Hard.h"
 #include "Utils.h"
 
 Game::Map GameMap;
 std::list<Game::Tank*> TanksList;
 std::list<Game::Bullet> BulletList;
-std::list<Game::AI_Player_Easy> AIList;
+std::list<Game::AI_Base*> AIList;
 Game::Tank Player;
 Game::Utils GameUtils;
 sf::Clock GameClock;
@@ -25,8 +28,9 @@ int WorldSpritePixels = 10;
 float Tick=0;
 int AITanksSpawned = 0;
 int AISpawnTick;
+int PlayerColor = 5;
 
-void SpawnAI()
+void SpawnAI(int Dificulty)
 {
     for(int i=0;i<GameMap.Height;i++)
     {
@@ -34,18 +38,53 @@ void SpawnAI()
         {
             if(GameMap.Matrix[j][i]=='$'&&GameMap.Matrix[j+1][i]=='$'&&GameMap.Matrix[j][i+1]=='$'&&GameMap.Matrix[j+1][i+1]=='$')
             {
-                if(!Player.TankCollision(&TanksList,j,i)&&!Player.TankCollision(&TanksList,j+1,i)&&!Player.TankCollision(&TanksList,j,i+1)&&!Player.TankCollision(&TanksList,j+1,i+1))
+                if(Dificulty==1)
                 {
-                    Game::AI_Player_Easy AI;
-                    AI.SpawnX = j;
-                    AI.SpawnY = i;
-                    AI.AITank = new Game::Tank();
-                    std::cout<<j<<" "<<i;
-                    AI.AITank->Init(j,i,0,&BulletList,&TanksList,&GameMap,&GameUtils);
-                    AI.AITank->TankControlType = 1;
-                    TanksList.push_front(AI.AITank);
-                    AIList.push_front(AI);
-                    AITanksSpawned++;
+                   if(!Player.TankCollision(&TanksList,j,i)&&!Player.TankCollision(&TanksList,j+1,i)&&!Player.TankCollision(&TanksList,j,i+1)&&!Player.TankCollision(&TanksList,j+1,i+1))
+                    {
+                        Game::AI_Player_Easy *AI = new Game::AI_Player_Easy();
+                        AI->SpawnX = j;
+                        AI->SpawnY = i;
+                        AI->AITank = new Game::Tank();
+                        std::cout<<j<<" "<<i;
+                        AI->AITank->Init(j,i,0,Dificulty,&BulletList,&TanksList,&GameMap,&GameUtils);
+                        AI->AITank->TankControlType = 1;
+                        TanksList.push_front(AI->AITank);
+                        AIList.push_front(AI);
+                        AITanksSpawned++;
+                    }
+                }
+                else if(Dificulty==2)
+                {
+                   if(!Player.TankCollision(&TanksList,j,i)&&!Player.TankCollision(&TanksList,j+1,i)&&!Player.TankCollision(&TanksList,j,i+1)&&!Player.TankCollision(&TanksList,j+1,i+1))
+                    {
+                        Game::AI_Player_Medium *AI = new Game::AI_Player_Medium();
+                        AI->SpawnX = j;
+                        AI->SpawnY = i;
+                        AI->AITank = new Game::Tank();
+                        std::cout<<j<<" "<<i;
+                        AI->AITank->Init(j,i,0,Dificulty,&BulletList,&TanksList,&GameMap,&GameUtils);
+                        AI->AITank->TankControlType = 1;
+                        TanksList.push_front(AI->AITank);
+                        AIList.push_front(AI);
+                        AITanksSpawned++;
+                    }
+                }
+                else if(Dificulty==3)
+                {
+                   if(!Player.TankCollision(&TanksList,j,i)&&!Player.TankCollision(&TanksList,j+1,i)&&!Player.TankCollision(&TanksList,j,i+1)&&!Player.TankCollision(&TanksList,j+1,i+1))
+                    {
+                        Game::AI_Player_Hard *AI = new Game::AI_Player_Hard();
+                        AI->SpawnX = j;
+                        AI->SpawnY = i;
+                        AI->AITank = new Game::Tank();
+                        std::cout<<j<<" "<<i;
+                        AI->AITank->Init(j,i,0,Dificulty,&BulletList,&TanksList,&GameMap,&GameUtils);
+                        AI->AITank->TankControlType = 1;
+                        TanksList.push_front(AI->AITank);
+                        AIList.push_front(AI);
+                        AITanksSpawned++;
+                    }
                 }
             }
         }
@@ -111,7 +150,7 @@ void SpawnPlayer()
         {
             if(GameMap.Matrix[j][i]=='^'&&GameMap.Matrix[j+1][i]=='^'&&GameMap.Matrix[j][i+1]=='^'&&GameMap.Matrix[j+1][i+1]=='^')
             {
-                Player.Init(j,i,0,&BulletList,&TanksList,&GameMap,&GameUtils);
+                Player.Init(j,i,0,PlayerColor,&BulletList,&TanksList,&GameMap,&GameUtils);
                 TanksList.push_front(&Player);
             }
         }
@@ -126,7 +165,7 @@ void DrawTanks()
         PlayerSprite.setOrigin(10,10);
         PlayerSprite.setRotation((*i)->Rotation);
         PlayerSprite.setTexture(Tanks);
-        PlayerSprite.setTextureRect(sf::IntRect(1*WorldSpritePixels*2,(*i)->TankControlType*20,WorldSpritePixels*2,WorldSpritePixels*2));
+        PlayerSprite.setTextureRect(sf::IntRect(1*WorldSpritePixels*2,(*i)->Color*20,WorldSpritePixels*2,WorldSpritePixels*2));
         Window->draw(PlayerSprite);
     }
 }
@@ -186,7 +225,8 @@ int main()
     window.setKeyRepeatEnabled(false);
     LoadTextures();
     SpawnPlayer();
-    SpawnAI();
+    srand(time(0));
+    SpawnAI(rand()%3+1);
 
     while (Window->isOpen())
     {
@@ -203,11 +243,13 @@ int main()
         Tick+=elapsed.asSeconds();
         if(Tick>0.1)
         {
+            srand(time(0));
             AISpawnTick++;
             if(AISpawnTick>=29&&AITanksSpawned<4)
             {
                 AISpawnTick-=29;
-                SpawnAI();
+                srand(time(0));
+                SpawnAI(rand()%3+1);
             }
             Tick=0;
             std::list<Game::Bullet>::iterator i;
@@ -219,15 +261,15 @@ int main()
                     BulletList.remove(*i);
                 }
             }
-            std::list<Game::AI_Player_Easy>::iterator j;
+            std::list<Game::AI_Base*>::iterator j;
             for(j=AIList.begin(); j != AIList.end(); ++j)
             {
-                (*j).Tick();
-                (*j).AITank->CheckForBullets();
-                if((*j).AITank->Life<=0)
-                {
-                    //AIList.remove(*j);
-                }
+                (*j)->Tick();
+            }
+            std::list<Game::Tank*>::iterator k;
+            for(k=TanksList.begin(); k != TanksList.end(); ++k)
+            {
+                (*k)->CheckForBullets();
             }
             //Tick
         }

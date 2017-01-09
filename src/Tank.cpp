@@ -6,7 +6,7 @@ namespace Game
     Tank::Tank()
     {
     }
-    void Tank::Init(int NewX, int NewY, int Type, std::list<Game::Bullet> *Bullets, std::list<Game::Tank*> *Tanks,Game::Map *Map,Game::Utils *GameUtils)
+    void Tank::Init(int NewX, int NewY, int Type, int NewColor, std::list<Game::Bullet> *Bullets, std::list<Game::Tank*> *Tanks,Game::Map *Map,Game::Utils *GameUtils)
     {
         X = NewX;
         Y = NewY;
@@ -15,6 +15,7 @@ namespace Game
         TanksList = Tanks;
         WorldMap = Map;
         Utils = GameUtils;
+        Color = NewColor;
     }
     void Tank::SetPosition(int NewX, int NewY)
     {

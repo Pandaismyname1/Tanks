@@ -1,11 +1,14 @@
 # depslib dependency file v1.0
-1483971898 source:c:\dev\c++\tanks in sfml\main.cpp
+1483980274 source:c:\dev\c++\tanks in sfml\main.cpp
 	<SFML/Graphics.hpp>
 	<list>
 	"Map.h"
 	"Tank.h"
 	"Bullet.h"
+	"AI_Base.h"
 	"AI_Player_Easy.h"
+	"AI_Player_Medium.h"
+	"AI_Player_Hard.h"
 	"Utils.h"
 
 1481908062 source:c:\dev\c++\tanks in sfml\src\map.cpp
@@ -15,10 +18,10 @@
 	<iostream>
 	<fstream>
 
-1483971550 source:c:\dev\c++\tanks in sfml\src\tank.cpp
+1483977742 source:c:\dev\c++\tanks in sfml\src\tank.cpp
 	"Tank.h"
 
-1483970921 c:\dev\c++\tanks in sfml\include\tank.h
+1483976895 c:\dev\c++\tanks in sfml\include\tank.h
 	<SFML/Graphics.hpp>
 	<list>
 	"Map.h"
@@ -42,9 +45,31 @@
 	"Map.h"
 	"Utils.h"
 
-1483972223 source:c:\dev\c++\tanks in sfml\src\ai_player_easy.cpp
+1483978774 source:c:\dev\c++\tanks in sfml\src\ai_player_easy.cpp
 	"AI_Player_Easy.h"
 
-1483971345 c:\dev\c++\tanks in sfml\include\ai_player_easy.h
+1483979380 c:\dev\c++\tanks in sfml\include\ai_player_easy.h
 	"Tank.h"
+	"AI_Base.h"
+
+1483978801 source:c:\dev\c++\tanks in sfml\src\ai_player_medium.cpp
+	"AI_Player_Medium.h"
+
+1483981106 c:\dev\c++\tanks in sfml\include\ai_player_medium.h
+	"Tank.h"
+	"AI_Base.h"
+
+1483977908 source:c:\dev\c++\tanks in sfml\src\ai_base.cpp
+	"AI_Base.h"
+
+1483979381 c:\dev\c++\tanks in sfml\include\ai_base.h
+	"Tank.h"
+	<list>
+
+1483981105 c:\dev\c++\tanks in sfml\include\ai_player_hard.h
+	<Tank.h>
+	<AI_Base.h>
+
+1483980789 source:c:\dev\c++\tanks in sfml\src\ai_player_hard.cpp
+	"AI_Player_Hard.h"
 

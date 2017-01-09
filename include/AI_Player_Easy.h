@@ -1,21 +1,21 @@
 #include "Tank.h"
+#include "AI_Base.h"
 namespace Game
 {
 
     #ifndef AI_PLAYER_EASY_H
     #define AI_PLAYER_EASY_H
 
-    class AI_Player_Easy
+    class AI_Player_Easy : public AI_Base
     {
         public:
             Tank *AITank;
             bool alive=true;
             int SpawnX,SpawnY;
-            std::list<Game::AI_Player_Easy> *AIList;
             int tick=0;
             AI_Player_Easy();
             virtual ~AI_Player_Easy();
-            void Tick();
+            virtual void Tick();
             void Respawn();
 
         protected:

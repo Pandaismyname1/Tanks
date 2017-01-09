@@ -20,11 +20,12 @@ namespace Game
             int Rotation = 0;
             int TankControlType = 0;
             float OneShotKillTimer;
+            int Color;
 
 
             Tank();
             virtual ~Tank();
-            void Init(int NewX, int NewY, int Type, std::list<Game::Bullet> *Bullets, std::list<Game::Tank*> *Tanks,Game::Map *Map,Game::Utils *GameUtils);
+            void Init(int NewX, int NewY, int Type, int NewColor, std::list<Game::Bullet> *Bullets, std::list<Game::Tank*> *Tanks,Game::Map *Map,Game::Utils *GameUtils);
             void SetPosition(int, int);
             void Fire();
             void CheckForBullets();

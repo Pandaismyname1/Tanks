@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <cstring>
 namespace Game
 {
     #ifndef MAP_H
@@ -9,7 +10,7 @@ namespace Game
     {
         public:
             Map();
-            void Load(char[]);
+            void Load(char FileName[]);
             int Width;
             int Height;
             char Matrix[100][100];

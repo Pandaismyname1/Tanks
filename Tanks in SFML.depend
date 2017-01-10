@@ -1,25 +1,20 @@
 # depslib dependency file v1.0
-1483991681 source:c:\dev\c++\tanks in sfml\main.cpp
+1484075000 source:c:\dev\c++\tanks in sfml\main.cpp
 	<SFML/Graphics.hpp>
 	<list>
 	"MainMenu.h"
-	"Map.h"
-	"Tank.h"
-	"Bullet.h"
-	"AI_Base.h"
-	"AI_Player_Easy.h"
-	"AI_Player_Medium.h"
-	"AI_Player_Hard.h"
-	"Utils.h"
+	"Scene.h"
+	"MapSelector.h"
 
-1481908062 source:c:\dev\c++\tanks in sfml\src\map.cpp
+1484071421 source:c:\dev\c++\tanks in sfml\src\map.cpp
 	"Map.h"
 
-1483969034 c:\dev\c++\tanks in sfml\include\map.h
+1484071064 c:\dev\c++\tanks in sfml\include\map.h
 	<iostream>
 	<fstream>
+	<cstring>
 
-1483977742 source:c:\dev\c++\tanks in sfml\src\tank.cpp
+1484066410 source:c:\dev\c++\tanks in sfml\src\tank.cpp
 	"Tank.h"
 
 1483976895 c:\dev\c++\tanks in sfml\include\tank.h
@@ -34,33 +29,33 @@
 	<list>
 	"Map.h"
 
-1483984922 source:c:\dev\c++\tanks in sfml\src\utils.cpp
+1484066442 source:c:\dev\c++\tanks in sfml\src\utils.cpp
 	"Utils.h"
 
-1483888157 source:c:\dev\c++\tanks in sfml\src\bullet.cpp
+1484067732 source:c:\dev\c++\tanks in sfml\src\bullet.cpp
 	"Bullet.h"
 
-1483969099 c:\dev\c++\tanks in sfml\include\bullet.h
+1484067757 c:\dev\c++\tanks in sfml\include\bullet.h
 	<SFML/Graphics.hpp>
 	<list>
 	"Map.h"
 	"Utils.h"
 
-1483978774 source:c:\dev\c++\tanks in sfml\src\ai_player_easy.cpp
+1484066460 source:c:\dev\c++\tanks in sfml\src\ai_player_easy.cpp
 	"AI_Player_Easy.h"
 
 1483979380 c:\dev\c++\tanks in sfml\include\ai_player_easy.h
 	"Tank.h"
 	"AI_Base.h"
 
-1483981382 source:c:\dev\c++\tanks in sfml\src\ai_player_medium.cpp
+1484066448 source:c:\dev\c++\tanks in sfml\src\ai_player_medium.cpp
 	"AI_Player_Medium.h"
 
 1483981106 c:\dev\c++\tanks in sfml\include\ai_player_medium.h
 	"Tank.h"
 	"AI_Base.h"
 
-1483977908 source:c:\dev\c++\tanks in sfml\src\ai_base.cpp
+1484066391 source:c:\dev\c++\tanks in sfml\src\ai_base.cpp
 	"AI_Base.h"
 
 1483979381 c:\dev\c++\tanks in sfml\include\ai_base.h
@@ -71,14 +66,39 @@
 	<Tank.h>
 	<AI_Base.h>
 
-1483980789 source:c:\dev\c++\tanks in sfml\src\ai_player_hard.cpp
+1484066452 source:c:\dev\c++\tanks in sfml\src\ai_player_hard.cpp
 	"AI_Player_Hard.h"
 
-1483995634 c:\dev\c++\tanks in sfml\include\mainmenu.h
+1484067661 c:\dev\c++\tanks in sfml\include\mainmenu.h
 	<SFML/Graphics.hpp>
 	<cmath>
 	<iostream>
 
-1483995183 source:c:\dev\c++\tanks in sfml\src\mainmenu.cpp
+1484067794 source:c:\dev\c++\tanks in sfml\src\mainmenu.cpp
 	"MainMenu.h"
+
+1484075168 c:\dev\c++\tanks in sfml\include\scene.h
+	"Tank.h"
+	"AI_Base.h"
+	"AI_Player_Easy.h"
+	"AI_Player_Medium.h"
+	"AI_Player_Hard.h"
+	"Map.h"
+	"Tank.h"
+	"Utils.h"
+	<string>
+
+1484075414 source:c:\dev\c++\tanks in sfml\src\scene.cpp
+	"Scene.h"
+
+1484074974 c:\dev\c++\tanks in sfml\include\mapselector.h
+	<SFML/Graphics.hpp>
+	<iostream>
+	<io.h>
+	<time.h>
+	<string>
+	<list>
+
+1484074901 source:c:\dev\c++\tanks in sfml\src\mapselector.cpp
+	"MapSelector.h"
 

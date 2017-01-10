@@ -23,15 +23,9 @@ namespace Game
             void Move();
             bool TryToExplode();
             void SetPosition(int, int);
+            bool operator==(const Game::Bullet& other) const;
             virtual ~Bullet();
-            bool operator==( const Game::Bullet& other ) const
-            {
-                if(X==other.X&&Y==other.Y&&Rotation==other.Rotation)
-                {
-                    return true;
-                }
-                return false;
-            }
+
 };
 
 #endif // BULLET_H

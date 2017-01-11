@@ -72,10 +72,11 @@ namespace Game
 	}
 	void Scene::DrawMap()
 	{
+	    std::cout<<GameMap.Width<<std::endl;
 		PlayerSprite.setOrigin(10, 10);
-		for (int i = 0; i < GameMap.Height; i++)
+		for (int i = 0; i < GameMap.Width; i++)
 		{
-			for (int j = 0; j < GameMap.Width; j++)
+			for (int j = 0; j < GameMap.Height; j++)
 			{
 				if (GameMap.Matrix[i][j] == '#')
 				{
@@ -105,18 +106,18 @@ namespace Game
 					WorldSprite.setTextureRect(sf::IntRect(3 * WorldSpritePixels, 0, WorldSpritePixels, WorldSpritePixels));
 					Window->draw(WorldSprite);
 				}
-				else if (GameMap.Matrix[i][j] == '*'&&GameMap.Matrix[i + 1][j] == '*'&&GameMap.Matrix[i][j + 1] == '*'&&GameMap.Matrix[i + 1][j + 1] == '*')
+				else if (GameMap.Matrix[i][j] == '0'||GameMap.Matrix[i][j] == '^'||GameMap.Matrix[i][j] == '$')
 				{
 					WorldSprite.setPosition(sf::Vector2f(j * 10, i * 10));
-					WorldSprite.setTexture(WorldBases);
-					WorldSprite.setTextureRect(sf::IntRect(0 * WorldSpritePixels * 2, 0, WorldSpritePixels * 2, WorldSpritePixels * 2));
+					WorldSprite.setTexture(WorldBuilder);
+					WorldSprite.setTextureRect(sf::IntRect(4 * WorldSpritePixels, 0, WorldSpritePixels, WorldSpritePixels));
 					Window->draw(WorldSprite);
 				}
 				else if (GameMap.Matrix[i][j] == '%'&&GameMap.Matrix[i + 1][j] == '%'&&GameMap.Matrix[i][j + 1] == '%'&&GameMap.Matrix[i + 1][j + 1] == '%')
 				{
 					WorldSprite.setPosition(sf::Vector2f(j * 10, i * 10));
 					WorldSprite.setTexture(WorldBases);
-					WorldSprite.setTextureRect(sf::IntRect(1 * WorldSpritePixels * 2, 0, WorldSpritePixels * 2, WorldSpritePixels * 2));
+					WorldSprite.setTextureRect(sf::IntRect(0 * WorldSpritePixels * 2, 0, WorldSpritePixels * 2, WorldSpritePixels * 2));
 					Window->draw(WorldSprite);
 				}
 			}

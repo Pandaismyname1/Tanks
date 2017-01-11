@@ -138,7 +138,8 @@ namespace Game
 			}
 			if (mousePos.x>MainMenuButtonsX&&mousePos.x<MainMenuButtonsX + 200 & mousePos.y>90 && mousePos.y<140)
 			{
-				//Editor
+                Game::Editor EditorWindow;
+                EditorWindow.Start();
 			}
 			if (mousePos.x>MainMenuButtonsX&&mousePos.x<MainMenuButtonsX + 200 & mousePos.y>150 && mousePos.y<200)
 			{

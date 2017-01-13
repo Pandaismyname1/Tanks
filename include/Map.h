@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
+#include <vector>
 namespace Game
 {
     #ifndef MAP_H
@@ -13,7 +14,7 @@ namespace Game
             void Load(char FileName[]);
             int Width;
             int Height;
-            char Matrix[100][100];
+            std::vector<std::vector<char> > Matrix = std::vector<std::vector<char> >(100);
             virtual ~Map();
 
         protected:

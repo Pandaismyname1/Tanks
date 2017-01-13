@@ -5,7 +5,7 @@ namespace Game
 	{
 
 	}
-	void Bullet::Init(int NewX, int NewY, int NewRotation, int NewDamage, std::list<Game::Bullet> *Bullets, Game::Map *GameMap, Game::Utils *GameUtils)
+	void Bullet::Init(int NewX, int NewY, int NewRotation, int NewDamage, std::list<Game::Bullet*> *Bullets, Game::Map *GameMap, Game::Utils *GameUtils)
 	{
 		X = NewX;
 		Y = NewY;
@@ -15,19 +15,10 @@ namespace Game
 		WorldMap = GameMap;
 		Utils = GameUtils;
 	}
-	bool Bullet::operator==(const Game::Bullet& other) const
-	{
-		if (X == other.X&&Y == other.Y&&Rotation == other.Rotation)
-		{
-			return true;
-		}
-		return false;
-	}
 	void Bullet::SetPosition(int NewX, int NewY)
 	{
 		X = NewX;
 		Y = NewY;
-		//Sprite->setPosition(cocos2d::Vec2((Y - 1) * 10, (X - 1) * 10));
 	}
 	bool Bullet::TryToExplode()
 	{
@@ -76,7 +67,7 @@ namespace Game
 	}
 	void Bullet::Move()
 	{
-		if (Rotation == 0)
+ 		if (Rotation == 0)
 		{
 			if (Utils->IsFlyableTile(WorldMap, X, Y + 1) && Utils->IsFlyableTile(WorldMap, X + 1, Y + 1))
 			{

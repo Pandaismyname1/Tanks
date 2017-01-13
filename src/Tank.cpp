@@ -6,7 +6,7 @@ namespace Game
 	Tank::Tank()
 	{
 	}
-	void Tank::Init(int NewX, int NewY, int Type, int NewColor, std::list<Game::Bullet> *Bullets, std::list<Game::Tank*> *Tanks, Game::Map *Map, Game::Utils *GameUtils)
+	void Tank::Init(int NewX, int NewY, int Type, int NewColor, int NewLife, int NewDamage, std::list<Game::Bullet*> *Bullets, std::list<Game::Tank*> *Tanks, std::list<Game::Pickup> *Pickups, Game::Map *Map, Game::Utils *GameUtils)
 	{
 		X = NewX;
 		Y = NewY;
@@ -16,6 +16,9 @@ namespace Game
 		WorldMap = Map;
 		Utils = GameUtils;
 		Color = NewColor;
+		PickupList=Pickups;
+		Life = NewLife;
+		Damage = NewDamage;
 	}
 	void Tank::SetPosition(int NewX, int NewY)
 	{
@@ -77,32 +80,82 @@ namespace Game
 		Game::Bullet *Bull = new Game::Bullet();
 		if (Rotation == 270)
 		{
-			Bull->Init(X - 2, Y + 0, 270, 1, BulletList, WorldMap, Utils);
+            if(OneShotKillTimer>0)
+            {
+			Bull->Init(X - 2, Y + 0, 270, 999, BulletList, WorldMap, Utils);
+            }
+			else
+            {
+			Bull->Init(X - 2, Y + 0, 270, Damage, BulletList, WorldMap, Utils);
+            }
 		}
 		else if (Rotation == 90)
 		{
-			Bull->Init(X + 2, Y + 0, 90, 1, BulletList, WorldMap, Utils);
+		    if(OneShotKillTimer>0)
+            {
+			Bull->Init(X + 2, Y + 0, 90, 999, BulletList, WorldMap, Utils);
+            }
+			else
+            {
+			Bull->Init(X + 2, Y + 0, 90, Damage, BulletList, WorldMap, Utils);
+            }
 		}
 		else if (Rotation == 180)
 		{
-			Bull->Init(X + 0, Y - 2, 180, 1, BulletList, WorldMap, Utils);
+		    if(OneShotKillTimer>0)
+            {
+			Bull->Init(X + 0, Y - 2, 180, 999, BulletList, WorldMap, Utils);
+            }
+			else
+            {
+			Bull->Init(X + 0, Y - 2, 180, Damage, BulletList, WorldMap, Utils);
+            }
 		}
 		else if (Rotation == 0)
 		{
-			Bull->Init(X, Y + 2, 0, 1, BulletList, WorldMap, Utils);
+		    if(OneShotKillTimer>0)
+            {
+			Bull->Init(X, Y + 2, 0, 999, BulletList, WorldMap, Utils);
+            }
+			else
+            {
+			Bull->Init(X, Y + 2, 0, Damage, BulletList, WorldMap, Utils);
+            }
 		}
-		BulletList->push_back(*Bull);
+		BulletList->push_back(Bull);
 	}
 	void Tank::CheckForBullets()
 	{
-		std::list<Game::Bullet>::iterator i;
+		std::list<Game::Bullet*>::iterator i;
 		for (i = BulletList->begin(); i != BulletList->end(); ++i)
+		{
+			if (((*i)->X == X && (*i)->Y == Y) || ((*i)->X == X + 1 && (*i)->Y == Y) || ((*i)->X == X && (*i)->Y == Y + 1) || ((*i)->X == X + 1 && (*i)->Y == Y + 1) || ((*i)->X == X + 1 && (*i)->Y == Y - 1) || ((*i)->X == X && (*i)->Y == Y - 1) || ((*i)->X == X - 1 && (*i)->Y == Y - 1) || ((*i)->X == X - 1 && (*i)->Y == Y) || ((*i)->X == X - 1 && (*i)->Y == Y + 1))
+			{
+				Life -= (*i)->Damage;
+				BulletList->remove(*i);
+			}
+		}
+	}
+	void Tank::CheckForPickups()
+	{
+		std::list<Game::Pickup>::iterator i;
+		for (i = PickupList->begin(); i != PickupList->end(); ++i)
 		{
 			if (((*i).X == X && (*i).Y == Y) || ((*i).X == X + 1 && (*i).Y == Y) || ((*i).X == X && (*i).Y == Y + 1) || ((*i).X == X + 1 && (*i).Y == Y + 1) || ((*i).X == X + 1 && (*i).Y == Y - 1) || ((*i).X == X && (*i).Y == Y - 1) || ((*i).X == X - 1 && (*i).Y == Y - 1) || ((*i).X == X - 1 && (*i).Y == Y) || ((*i).X == X - 1 && (*i).Y == Y + 1))
 			{
-				Life -= (*i).Damage;
-				BulletList->remove(*i);
-				std::cout << "Removed" << std::endl;
+			    if((*i).Type==0)
+                {
+                    Life++;
+                }
+			    if((*i).Type==1)
+                {
+                    Damage++;
+                }
+			    if((*i).Type==2)
+                {
+                    OneShotKillTimer+=10;
+                }
+				PickupList->remove(*i);
 			}
 		}
 	}

@@ -26,8 +26,7 @@ namespace Game
 							AI->SpawnX = j;
 							AI->SpawnY = i;
 							AI->AITank = new Game::Tank();
-							std::cout << j << " " << i;
-							AI->AITank->Init(j, i, 0, Dificulty, &BulletList, &TanksList, &GameMap, &GameUtils);
+							AI->AITank->Init(j, i, 0, Dificulty, 2, 1, &BulletList, &TanksList,&PickupList, &GameMap, &GameUtils);
 							AI->AITank->TankControlType = 1;
 							TanksList.push_front(AI->AITank);
 							AIList.push_front(AI);
@@ -43,7 +42,7 @@ namespace Game
 							AI->SpawnY = i;
 							AI->AITank = new Game::Tank();
 							std::cout << j << " " << i;
-							AI->AITank->Init(j, i, 0, Dificulty, &BulletList, &TanksList, &GameMap, &GameUtils);
+							AI->AITank->Init(j, i, 0, Dificulty, 4, 1, &BulletList, &TanksList,&PickupList, &GameMap, &GameUtils);
 							AI->AITank->TankControlType = 1;
 							TanksList.push_front(AI->AITank);
 							AIList.push_front(AI);
@@ -59,7 +58,7 @@ namespace Game
 							AI->SpawnY = i;
 							AI->AITank = new Game::Tank();
 							std::cout << j << " " << i;
-							AI->AITank->Init(j, i, 0, Dificulty, &BulletList, &TanksList, &GameMap, &GameUtils);
+							AI->AITank->Init(j, i, 0, Dificulty, 5, 2, &BulletList, &TanksList,&PickupList, &GameMap, &GameUtils);
 							AI->AITank->TankControlType = 1;
 							TanksList.push_front(AI->AITank);
 							AIList.push_front(AI);
@@ -72,7 +71,6 @@ namespace Game
 	}
 	void Scene::DrawMap()
 	{
-	    std::cout<<GameMap.Width<<std::endl;
 		PlayerSprite.setOrigin(10, 10);
 		for (int i = 0; i < GameMap.Width; i++)
 		{
@@ -131,7 +129,7 @@ namespace Game
 			{
 				if (GameMap.Matrix[j][i] == '^'&&GameMap.Matrix[j + 1][i] == '^'&&GameMap.Matrix[j][i + 1] == '^'&&GameMap.Matrix[j + 1][i + 1] == '^')
 				{
-					Player.Init(j, i, 0, PlayerColor, &BulletList, &TanksList, &GameMap, &GameUtils);
+					Player.Init(j, i, 0, PlayerColor, 5, 1, &BulletList, &TanksList,&PickupList, &GameMap, &GameUtils);
 					TanksList.push_front(&Player);
 				}
 			}
@@ -156,6 +154,11 @@ namespace Game
 		WorldBases.loadFromFile("Resources/Sprites/WorldBases.png");
 		Tanks.loadFromFile("Resources/Sprites/Tanks.png");
 		Bullet.loadFromFile("Resources/Sprites/Bullet.png");
+		Powerups.loadFromFile("Resources/Sprites/PowerUps.png");
+		TextFont.loadFromFile("Resources/Fonts/Dimitri.TTF");
+		Text.setCharacterSize(20);
+		Text.setFont(TextFont);
+        Text.setString("GameOver");
 	}
 	void Scene::DetectInput()
 	{
@@ -186,22 +189,46 @@ namespace Game
 	}
 	void Scene::DrawBullets()
 	{
-		std::list<Game::Bullet>::iterator i;
+		std::list<Game::Bullet*>::iterator i;
 		for (i = BulletList.begin(); i != BulletList.end(); ++i)
 		{
-			BulletsSprite.setPosition(sf::Vector2f(((*i).Y + 1) * 10, ((*i).X + 1) * 10));
+			BulletsSprite.setPosition(sf::Vector2f(((*i)->Y + 1) * 10, ((*i)->X + 1) * 10));
 			BulletsSprite.setOrigin(10, 10);
-			BulletsSprite.setRotation((*i).Rotation);
+			BulletsSprite.setRotation((*i)->Rotation);
 			BulletsSprite.setTexture(Bullet);
 			Window->draw(BulletsSprite);
 		}
 	}
-	void Scene::Start(int Difficulty, std::string MapName)
+	void Scene::CreatePickup()
+	{
+        Pickup NewPickup;
+        srand(time(0));
+        NewPickup.X = rand()%(GameMap.Width-4)+2;
+        srand(time(0));
+        NewPickup.Y = rand()%(GameMap.Height-4)+2;
+        srand(time(0));
+        NewPickup.Type = rand()%3;
+        PickupList.push_back(NewPickup);
+        std::cout<<NewPickup.X<<" "<<NewPickup.Y<<std::endl;
+	}
+	void Scene::DrawPickups()
+	{
+        std::list<Game::Pickup>::iterator i;
+		for (i = PickupList.begin(); i != PickupList.end(); ++i)
+		{
+			PowerupsSprite.setPosition(sf::Vector2f(((*i).Y) * 10, ((*i).X) * 10));
+			PowerupsSprite.setTexture(Powerups);
+			PowerupsSprite.setTextureRect(sf::IntRect( (*i).Type*WorldSpritePixels*2, 0, WorldSpritePixels * 2, WorldSpritePixels * 2));
+			Window->draw(PowerupsSprite);
+		}
+	}
+	void Scene::Start(int Difficulty, std::string MapName, int NewPlayerColor)
 	{
 	    char ConvertedString[90];
 	    strcpy(ConvertedString,MapName.c_str());
 	    GameMap.Load(ConvertedString);
         GameUtils.InitInput();
+	    PlayerColor = NewPlayerColor;
         sf::RenderWindow window(sf::VideoMode(GameMap.Height*WorldSpritePixels , GameMap.Width*WorldSpritePixels), "Tanks! Boom Boom!");
         Window = &window;
         window.setKeyRepeatEnabled(false);
@@ -209,6 +236,7 @@ namespace Game
         SpawnPlayer();
         srand(time(0));
         SpawnAI(Difficulty);
+        CreatePickup();
 
         while (Window->isOpen())
         {
@@ -226,6 +254,12 @@ namespace Game
             if(Tick>0.1)
             {
                 srand(time(0));
+                NextPickup--;
+                if(NextPickup<=0)
+                {
+                    NextPickup+=100;
+                    CreatePickup();
+                }
                 AISpawnTick++;
                 if(AISpawnTick>=29&&AITanksSpawned<4)
                 {
@@ -233,13 +267,26 @@ namespace Game
                     SpawnAI(Difficulty);
                 }
                 Tick=0;
-                std::list<Game::Bullet>::iterator i;
+                std::list<Game::Bullet*>::iterator i;
                 for(i=BulletList.begin(); i != BulletList.end(); ++i)
                 {
-                    (*i).Move();
-                    if((*i).TryToExplode()==true)
+                    (*i)->Move();
+                    if((*i)->TryToExplode()==true)
                     {
+                        if(Player.Life<=0)
+                        {
+                            GameOver=true;
+                        }
                         BulletList.remove(*i);
+                    }
+                    if(GameMap.Matrix[(*i)->X][(*i)->Y]=='%'||GameMap.Matrix[(*i)->X+1][(*i)->Y]=='%'||GameMap.Matrix[(*i)->X][(*i)->Y+1]=='%'||GameMap.Matrix[(*i)->X+1][(*i)->Y+1]=='%')
+                    {
+                        BaseHealth--;
+                        BulletList.remove(*i);
+                        if (BaseHealth<=0)
+                        {
+                            GameOver=true;
+                        }
                     }
                 }
                 std::list<Game::AI_Base*>::iterator j;
@@ -251,13 +298,29 @@ namespace Game
                 for(k=TanksList.begin(); k != TanksList.end(); ++k)
                 {
                     (*k)->CheckForBullets();
+                    (*k)->CheckForPickups();
+                    if((*k)->OneShotKillTimer>0)
+                    {
+                        (*k)->OneShotKillTimer-=0.1;
+                    }
+                    else if((*k)->OneShotKillTimer<0)
+                    {
+                        (*k)->OneShotKillTimer=0;
+                    }
                 }
                 //Tick
             }
+            if(!GameOver)
+            {
             DrawMap();
             DrawTanks();
             DrawBullets();
-            //window.draw(shape);
+            DrawPickups();
+            }
+            else
+            {
+                Window->draw(Text);
+            }
             Window->display();
         }
 	}

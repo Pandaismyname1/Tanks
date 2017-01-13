@@ -11,8 +11,21 @@ namespace Game
 	{
 		//dtor
 	}
+	void MainMenu::SavePrefs()
+	{
+        std::ofstream File("Resources/Preferences");
+        File<<TankColor;
+        File.close();
+	}
+	void MainMenu::LoadPrefs()
+	{
+        std::ifstream File("Resources/Preferences");
+        File>>TankColor;
+        File.close();
+	}
 	void MainMenu::Start()
 	{
+	    LoadPrefs();
 		sf::RenderWindow window(sf::VideoMode(600, 350), "Tanks! Boom Boom!");
 		LoadTextures();
 		Window = &window;
@@ -51,6 +64,8 @@ namespace Game
 		BoomSprite.setTexture(BoomTexture);
 		UITexture.loadFromFile("Resources/Sprites/UI.png");
 		UISprite.setTexture(UITexture);
+		TankTexture.loadFromFile("Resources/Sprites/Tanks.png");
+		TankSprite.setTexture(TankTexture);
 		UIFont.loadFromFile("Resources/Fonts/Dimitri.ttf");
 		UIText.setFont(UIFont);
 		UIText.setCharacterSize(48);
@@ -74,15 +89,40 @@ namespace Game
 		Window->draw(UIText);
 
 		UISprite.setPosition(sf::Vector2f(MainMenuButtonsX, 150));
+		UISprite.setScale(sf::Vector2f(0.25,1));
 		Window->draw(UISprite);
 
-		UIText.setString("Options");
+		UIText.setString("-");
 		UIText.setPosition(sf::Vector2f(MainMenuButtonsX + 15, 145));
 		Window->draw(UIText);
+
+		TankSprite.setTextureRect(sf::IntRect(0,20*TankColor,20,20));
+		TankSprite.setScale(sf::Vector2f(2.5,2.5));
+		TankSprite.setPosition(sf::Vector2f(MainMenuButtonsX + 75,150));
+		Window->draw(TankSprite);
+
+		UISprite.setPosition(sf::Vector2f(MainMenuButtonsX+150, 150));
+		Window->draw(UISprite);
+
+		UIText.setString("+");
+		UIText.setPosition(sf::Vector2f(MainMenuButtonsX + 165, 145));
+		Window->draw(UIText);
+
+		UISprite.setScale(sf::Vector2f(1,1));
+		UISprite.setPosition(sf::Vector2f(MainMenuButtonsX, 210));
+		Window->draw(UISprite);
+
+		UIText.setCharacterSize(30);
+		UIText.setString("Multiplayer");
+		UIText.setPosition(sf::Vector2f(MainMenuButtonsX + 10, 215));
+		Window->draw(UIText);
+
+
 
 		UISprite.setPosition(sf::Vector2f(MainMenuButtonsX, 270));
 		Window->draw(UISprite);
 
+		UIText.setCharacterSize(48);
 		UIText.setString("Quit");
 		UIText.setPosition(sf::Vector2f(MainMenuButtonsX + 50, 265));
 		Window->draw(UIText);
@@ -134,19 +174,38 @@ namespace Game
 			sf::Vector2i mousePos = sf::Mouse::getPosition(*Window);
 			if (mousePos.x>MainMenuButtonsX&&mousePos.x<MainMenuButtonsX + 200 && mousePos.y>270 && mousePos.y<320)
 			{
+			    //Exit
+				Window->close();
+			}
+			if (mousePos.x>MainMenuButtonsX&&mousePos.x<MainMenuButtonsX + 200 && mousePos.y>210 && mousePos.y<260)
+			{
+			    //Multiplayer
+				Difficulty = 99;
 				Window->close();
 			}
 			if (mousePos.x>MainMenuButtonsX&&mousePos.x<MainMenuButtonsX + 200 & mousePos.y>90 && mousePos.y<140)
 			{
+			    //Editor
                 Game::Editor EditorWindow;
                 EditorWindow.Start();
 			}
-			if (mousePos.x>MainMenuButtonsX&&mousePos.x<MainMenuButtonsX + 200 & mousePos.y>150 && mousePos.y<200)
+			if (mousePos.x>MainMenuButtonsX&&mousePos.x<MainMenuButtonsX + 50 && mousePos.y>150 && mousePos.y<200)
 			{
-				//Options
+				//Prev
+				TankColor--;
+				TankColor = TankColor%8;
+				SavePrefs();
+			}
+			if (mousePos.x>MainMenuButtonsX+150&&mousePos.x<MainMenuButtonsX + 200 && mousePos.y>150 && mousePos.y<200)
+			{
+				//Next
+				TankColor++;
+				TankColor = TankColor%8;
+				SavePrefs();
 			}
 			if (mousePos.x>MainMenuButtonsX&&mousePos.x<MainMenuButtonsX + 200 && mousePos.y>30 && mousePos.y<80)
 			{
+			    //Play
 				showMenu = 1;
 				MenuTick = 0;
 			}
@@ -194,6 +253,18 @@ namespace Game
 				UIText.setColor(sf::Color(100, 100, 100, 255));
 				Window->draw(UIText);
 			}
+			if (mousePos.x>MainMenuButtonsX&&mousePos.x<MainMenuButtonsX + 200 && mousePos.y>210 && mousePos.y<260)
+			{
+				UISprite.setPosition(sf::Vector2f(MainMenuButtonsX, 210));
+				UISprite.setColor(sf::Color(200, 200, 200, 255));
+				Window->draw(UISprite);
+				UIText.setCharacterSize(30);
+				UIText.setString("Multiplayer");
+				UIText.setPosition(sf::Vector2f(MainMenuButtonsX + 10, 215));
+				UIText.setColor(sf::Color(100, 100, 100, 255));
+				Window->draw(UIText);
+				UIText.setCharacterSize(48);
+			}
 			if (mousePos.x>MainMenuButtonsX&&mousePos.x<MainMenuButtonsX + 200 && mousePos.y>90 && mousePos.y<140)
 			{
 				UISprite.setPosition(sf::Vector2f(MainMenuButtonsX, 90));
@@ -204,13 +275,27 @@ namespace Game
 				UIText.setColor(sf::Color(100, 100, 100, 255));
 				Window->draw(UIText);
 			}
-			if (mousePos.x>MainMenuButtonsX&&mousePos.x<MainMenuButtonsX + 200 && mousePos.y>150 && mousePos.y<200)
+			if (mousePos.x>MainMenuButtonsX&&mousePos.x<MainMenuButtonsX + 50 && mousePos.y>150 && mousePos.y<200)
 			{
 				UISprite.setPosition(sf::Vector2f(MainMenuButtonsX, 150));
+				UISprite.setScale(sf::Vector2f(0.25,1));
 				UISprite.setColor(sf::Color(200, 200, 200, 255));
 				Window->draw(UISprite);
-				UIText.setString("Options");
+				UISprite.setScale(sf::Vector2f(1,1));
+				UIText.setString("-");
 				UIText.setPosition(sf::Vector2f(MainMenuButtonsX + 15, 145));
+				UIText.setColor(sf::Color(100, 100, 100, 255));
+				Window->draw(UIText);
+			}
+			if (mousePos.x>MainMenuButtonsX+150&&mousePos.x<MainMenuButtonsX + 200 && mousePos.y>150 && mousePos.y<200)
+			{
+				UISprite.setPosition(sf::Vector2f(MainMenuButtonsX+150, 150));
+				UISprite.setScale(sf::Vector2f(0.25,1));
+				UISprite.setColor(sf::Color(200, 200, 200, 255));
+				Window->draw(UISprite);
+				UISprite.setScale(sf::Vector2f(1,1));
+				UIText.setString("+");
+				UIText.setPosition(sf::Vector2f(MainMenuButtonsX + 165, 145));
 				UIText.setColor(sf::Color(100, 100, 100, 255));
 				Window->draw(UIText);
 			}

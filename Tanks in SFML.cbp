@@ -34,15 +34,18 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="Map1" />
+		<Unit filename="Resources/Preferences" />
 		<Unit filename="include/AI_Base.h" />
 		<Unit filename="include/AI_Player_Easy.h" />
 		<Unit filename="include/AI_Player_Hard.h" />
 		<Unit filename="include/AI_Player_Medium.h" />
 		<Unit filename="include/Bullet.h" />
+		<Unit filename="include/Editor.h" />
 		<Unit filename="include/MainMenu.h" />
 		<Unit filename="include/Map.h" />
 		<Unit filename="include/MapSelector.h" />
+		<Unit filename="include/Multiplayer.h" />
+		<Unit filename="include/Pickup.h" />
 		<Unit filename="include/Scene.h" />
 		<Unit filename="include/Tank.h" />
 		<Unit filename="include/Utils.h" />
@@ -52,9 +55,12 @@
 		<Unit filename="src/AI_Player_Hard.cpp" />
 		<Unit filename="src/AI_Player_Medium.cpp" />
 		<Unit filename="src/Bullet.cpp" />
+		<Unit filename="src/Editor.cpp" />
 		<Unit filename="src/MainMenu.cpp" />
 		<Unit filename="src/Map.cpp" />
 		<Unit filename="src/MapSelector.cpp" />
+		<Unit filename="src/Multiplayer.cpp" />
+		<Unit filename="src/Pickup.cpp" />
 		<Unit filename="src/Scene.cpp" />
 		<Unit filename="src/Tank.cpp" />
 		<Unit filename="src/Utils.cpp" />

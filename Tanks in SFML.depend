@@ -1,41 +1,44 @@
 # depslib dependency file v1.0
-1484075000 source:c:\dev\c++\tanks in sfml\main.cpp
+1484299831 source:c:\dev\c++\tanks in sfml\main.cpp
 	<SFML/Graphics.hpp>
 	<list>
 	"MainMenu.h"
 	"Scene.h"
 	"MapSelector.h"
+	"Multiplayer.h"
 
-1484071421 source:c:\dev\c++\tanks in sfml\src\map.cpp
+1484330849 source:c:\dev\c++\tanks in sfml\src\map.cpp
 	"Map.h"
 
-1484071064 c:\dev\c++\tanks in sfml\include\map.h
+1484330854 c:\dev\c++\tanks in sfml\include\map.h
 	<iostream>
 	<fstream>
 	<cstring>
+	<vector>
 
-1484066410 source:c:\dev\c++\tanks in sfml\src\tank.cpp
+1484331997 source:c:\dev\c++\tanks in sfml\src\tank.cpp
 	"Tank.h"
 
-1483976895 c:\dev\c++\tanks in sfml\include\tank.h
+1484331751 c:\dev\c++\tanks in sfml\include\tank.h
 	<SFML/Graphics.hpp>
 	<list>
 	"Map.h"
 	"Bullet.h"
 	"Utils.h"
+	"Pickup.h"
 
-1483970030 c:\dev\c++\tanks in sfml\include\utils.h
+1484147691 c:\dev\c++\tanks in sfml\include\utils.h
 	<SFML/Graphics.hpp>
 	<list>
 	"Map.h"
 
-1484066442 source:c:\dev\c++\tanks in sfml\src\utils.cpp
+1484304552 source:c:\dev\c++\tanks in sfml\src\utils.cpp
 	"Utils.h"
 
-1484067732 source:c:\dev\c++\tanks in sfml\src\bullet.cpp
+1484330773 source:c:\dev\c++\tanks in sfml\src\bullet.cpp
 	"Bullet.h"
 
-1484067757 c:\dev\c++\tanks in sfml\include\bullet.h
+1484330810 c:\dev\c++\tanks in sfml\include\bullet.h
 	<SFML/Graphics.hpp>
 	<list>
 	"Map.h"
@@ -69,27 +72,29 @@
 1484066452 source:c:\dev\c++\tanks in sfml\src\ai_player_hard.cpp
 	"AI_Player_Hard.h"
 
-1484136106 c:\dev\c++\tanks in sfml\include\mainmenu.h
+1484142707 c:\dev\c++\tanks in sfml\include\mainmenu.h
 	<SFML/Graphics.hpp>
 	<cmath>
 	<iostream>
+	<fstream>
 	"Editor.h"
 
-1484136135 source:c:\dev\c++\tanks in sfml\src\mainmenu.cpp
+1484298738 source:c:\dev\c++\tanks in sfml\src\mainmenu.cpp
 	"MainMenu.h"
 
-1484075168 c:\dev\c++\tanks in sfml\include\scene.h
+1484331721 c:\dev\c++\tanks in sfml\include\scene.h
 	"Tank.h"
 	"AI_Base.h"
 	"AI_Player_Easy.h"
 	"AI_Player_Medium.h"
 	"AI_Player_Hard.h"
 	"Map.h"
-	"Tank.h"
 	"Utils.h"
+	"Pickup.h"
 	<string>
+	<list>
 
-1484140733 source:c:\dev\c++\tanks in sfml\src\scene.cpp
+1484331774 source:c:\dev\c++\tanks in sfml\src\scene.cpp
 	"Scene.h"
 
 1484074974 c:\dev\c++\tanks in sfml\include\mapselector.h
@@ -113,114 +118,21 @@
 1484140167 source:c:\dev\c++\tanks in sfml\src\editor.cpp
 	"Editor.h"
 
-1484075000 source:d:\proiectiptanks\main.cpp
-	<SFML/Graphics.hpp>
-	<list>
-	"MainMenu.h"
-	"Scene.h"
-	"MapSelector.h"
+1484143734 c:\dev\c++\tanks in sfml\include\base.h
 
-1484136106 d:\proiectiptanks\include\mainmenu.h
-	<SFML/Graphics.hpp>
-	<cmath>
-	<iostream>
-	"Editor.h"
+1484331768 source:c:\dev\c++\tanks in sfml\src\multiplayer.cpp
+	"Multiplayer.h"
 
-1484138858 d:\proiectiptanks\include\editor.h
-	<iostream>
-	<fstream>
-	<cstring>
-	<SFML/Graphics.hpp>
-	<sstream>
-
-1484075168 d:\proiectiptanks\include\scene.h
+1484331644 c:\dev\c++\tanks in sfml\include\multiplayer.h
 	"Tank.h"
-	"AI_Base.h"
-	"AI_Player_Easy.h"
-	"AI_Player_Medium.h"
-	"AI_Player_Hard.h"
-	"Map.h"
-	"Tank.h"
-	"Utils.h"
-	<string>
-
-1483976895 d:\proiectiptanks\include\tank.h
-	<SFML/Graphics.hpp>
-	<list>
-	"Map.h"
-	"Bullet.h"
-	"Utils.h"
-
-1484071064 d:\proiectiptanks\include\map.h
-	<iostream>
-	<fstream>
-	<cstring>
-
-1484067757 d:\proiectiptanks\include\bullet.h
-	<SFML/Graphics.hpp>
-	<list>
 	"Map.h"
 	"Utils.h"
-
-1483970030 d:\proiectiptanks\include\utils.h
-	<SFML/Graphics.hpp>
-	<list>
-	"Map.h"
-
-1483979381 d:\proiectiptanks\include\ai_base.h
-	"Tank.h"
-	<list>
-
-1483979380 d:\proiectiptanks\include\ai_player_easy.h
-	"Tank.h"
-	"AI_Base.h"
-
-1483981106 d:\proiectiptanks\include\ai_player_medium.h
-	"Tank.h"
-	"AI_Base.h"
-
-1483981105 d:\proiectiptanks\include\ai_player_hard.h
-	<Tank.h>
-	<AI_Base.h>
-
-1484074974 d:\proiectiptanks\include\mapselector.h
-	<SFML/Graphics.hpp>
-	<iostream>
-	<io.h>
-	<time.h>
+	"Pickup.h"
 	<string>
 	<list>
 
-1484066391 source:d:\proiectiptanks\src\ai_base.cpp
-	"AI_Base.h"
+1484331975 c:\dev\c++\tanks in sfml\include\pickup.h
 
-1484066460 source:d:\proiectiptanks\src\ai_player_easy.cpp
-	"AI_Player_Easy.h"
-
-1484066452 source:d:\proiectiptanks\src\ai_player_hard.cpp
-	"AI_Player_Hard.h"
-
-1484066448 source:d:\proiectiptanks\src\ai_player_medium.cpp
-	"AI_Player_Medium.h"
-
-1484067732 source:d:\proiectiptanks\src\bullet.cpp
-	"Bullet.h"
-
-1484136135 source:d:\proiectiptanks\src\mainmenu.cpp
-	"MainMenu.h"
-
-1484071421 source:d:\proiectiptanks\src\map.cpp
-	"Map.h"
-
-1484074901 source:d:\proiectiptanks\src\mapselector.cpp
-	"MapSelector.h"
-
-1484140733 source:d:\proiectiptanks\src\scene.cpp
-	"Scene.h"
-
-1484066410 source:d:\proiectiptanks\src\tank.cpp
-	"Tank.h"
-
-1484066442 source:d:\proiectiptanks\src\utils.cpp
-	"Utils.h"
+1484330997 source:c:\dev\c++\tanks in sfml\src\pickup.cpp
+	"Pickup.h"
 

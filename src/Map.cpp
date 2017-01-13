@@ -14,6 +14,8 @@ namespace Game
 		strcat(str,FileName);
 		File.open(str);
 		File >> Width >> Height;
+		for ( int i = 0 ; i < 100 ; i++ )
+            Matrix[i].resize(100);
 		for (int i = 0; i < Width; i++)
 		{
 			for (int j = 0; j < Height; j++)

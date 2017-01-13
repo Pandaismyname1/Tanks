@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <iostream>
+#include <fstream>
 #include "Editor.h"
 namespace Game
 {
@@ -20,11 +21,14 @@ class MainMenu
         sf::Texture BackgroundTexture;
         sf::Texture BoomTexture;
         sf::Texture UITexture;
+        sf::Texture TankTexture;
         sf::Sprite BackgroundSprite;
         sf::Sprite BoomSprite;
         sf::Sprite UISprite;
+        sf::Sprite TankSprite;
         sf::Text UIText;
         sf::Font UIFont;
+        int TankColor;
         int MainMenuButtonsX = 350;
         int PlayMenuButtonsX = 700;
         float BoomTick = 0;
@@ -38,6 +42,8 @@ class MainMenu
         void MenuAnimation();
         float lerp(float a, float b, float f);
         float abs(float a);
+        void SavePrefs();
+        void LoadPrefs();
     protected:
 
     private:
